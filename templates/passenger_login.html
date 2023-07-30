@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passenger Login</title>
+</head>
+<body>
+    <h1>Passenger Login</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.email.label }} {{ form.email }}
+        {{ form.password.label }} {{ form.password }}
+        {{ form.submit }}
+    </form>
+    <a href="{{ url_for('passenger_register') }}">Not registered? Register as a passenger</a>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('passenger_logout') }}">Logout</a>
+    {% endif %}
+
+    <a href=" {{url_for('index')}}">Not a passenger? go to home??</a>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride History</title>
+</head>
+<body>
+    <h1>Ride History</h1>
+
+    <h2>Accepted Rides:</h2>
+    <ul>
+        {% for ride in accepted_rides %}
+        <li>
+            From: {{ ride.from_location }} - To: {{ ride.to_location }}
+            <!-- You can add more details of the ride if needed -->
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Rejected Rides:</h2>
+    <ul>
+        {% for ride in rejected_rides %}
+        <li>
+            From: {{ ride.from_location }} - To: {{ ride.to_location }}
+            <!-- You can add more details of the ride if needed -->
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('passenger_dashboard') }}">Back to Passenger Dashboard</a>
+</body>
+</html>

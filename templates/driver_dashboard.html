@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver dashboard</title>
+</head>
+<body>
+    <h1>Driver dashboard</h1>
+{% for trip in available_trips %}
+    <h3>Trip ID: {{ trip.id }}</h3>
+    <p>From: {{ trip.from_location }}</p>
+    <p>To: {{ trip.to_location }}</p>
+
+    <!-- Display the quotation form for this trip -->
+    <form method="POST" action="{{ url_for('driver_dashboard') }}">
+        {{ quotation_form.csrf_token }}
+       {{quotation_form.trip_id.label}} {{ quotation_form.trip_id(value=trip.id) }}
+       {{quotation_form.quotation_amount.label}} {{ quotation_form.quotation_amount() }}
+        {{ quotation_form.submit }}
+    </form>
+{% endfor %}
+
+      
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('driver_logout') }}">Logout</a>
+    {% endif %}
+
+    <a href=" {{url_for('index')}}">Not a passenger? go to home??</a>
+
+</body>
+</html>
