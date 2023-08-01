@@ -1,4 +1,4 @@
-from main import  User,Trip,Ride,db, app
+from main import  User,Trip,Ride,db, app,Quotation
 
 def show_users():
     with app.app_context():
@@ -17,7 +17,25 @@ def passenger_rides():
                 print("Driver ID:", ride.driver_id)
                 print("From Location:", ride.from_location)
                 print("To Location:", ride.to_location)
+                print("trip_id",ride.trip_id)
+                print("Status",ride.status)
                 print("---")
+
+
+
+
+
+def see_quotations():
+    with app.app_context():
+        quotation = Quotation.query.all()
+        for q in quotation:
+            print("id",q.id)
+            print("driver_id",q.driver_id)
+            print("status",q.status)
+            print("updatd status",q.status)
+            print('check rides',q.rides)
+        # quote = Quotation.query.get(24)
+        # print(quote.rides)
 
 
 def check_available_trips():
@@ -29,12 +47,14 @@ def check_available_trips():
 
 
 
-def show():
-    show_users()
-    passenger_rides()
-    check_available_trips()
+# def show():
+#     show_users()
+#     passenger_rides()
+#     check_available_trips()
 
 if __name__ == '__main__':
     # show_users()
-    show()
+    # show()
     # check_available_trips()
+    # passenger_rides()
+    see_quotations()

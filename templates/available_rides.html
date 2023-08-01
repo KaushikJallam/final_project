@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Available Rides</title>
 </head>
+
 <body>
     <h1>Available Rides</h1>
     <ul>
         {% for ride in rides %}
-            <li>
-                <strong>Ride ID:</strong> {{ ride.id }}<br>
-                <strong>Passenger ID:</strong> {{ ride.passenger_id }}<br>
-                <strong>From Location:</strong> {{ ride.from_location }}<br>
-                <strong>To Location:</strong> {{ ride.to_location }}<br>
-                <form method="POST" action="{{ url_for('accept_ride', ride_id=ride.id) }}">
-                    <button type="submit">Accept Ride</button>
-                </form>
-            </li>
+        <li>
+            <strong>Ride ID:</strong> {{ ride.id }}<br>
+            <strong>Passenger ID:</strong> {{ ride.passenger_id }}<br>
+            <strong>From Location:</strong> {{ ride.from_location }}<br>
+            <strong>To Location:</strong> {{ ride.to_location }}<br>
+            <form method="POST" action="{{ url_for('accept_ride', ride_id=ride.id) }}">
+                <button type="submit">Accept Ride</button>
+            </form>
+        </li>
         {% endfor %}
     </ul>
 </body>
+
 </html>

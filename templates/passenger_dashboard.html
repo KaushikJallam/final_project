@@ -1,62 +1,64 @@
+{% from 'wtf.html' import csrf_meta %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passenger dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{ csrf_meta() }}
+  <title>Passenger dashboard</title>
 </head>
+
 <body>
-    <h1>Passenger dashboard</h1>
-    <form method="POST" action="{{ url_for('create_ride') }}">
-        <label for="from_location">From:</label>
-        <input type="text" id="from_location" name="from_location" required>
-      
-        <label for="to_location">To:</label>
-        <input type="text" id="to_location" name="to_location" required>
-      
-        <button type="submit">Create Ride</button>
-      </form>
-      
-      <!-- Display upcoming rides and other passenger-specific data below the form -->
-      {% for ride in upcoming_rides %}
-      <div>
-          <p>From: {{ ride.from_location }}</p>
-          <p>To: {{ ride.to_location }}</p>
-      </div>
-      {% endfor %}
+  <h1>Passenger dashboard</h1>
+  <form method="POST" action="{{ url_for('create_ride') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-      <!-- Display incoming quotations (if any) -->
-      {% for quotation in quotations %}
-      <div>
-          <p>Driver: {{ quotation.driver.username }}</p>
-          <p>Quotation Amount: {{ quotation.quotation_amount }}</p>
-          {% if quotation.status == "Accepted" %}
-              <p>Status: Accepted</p>
-          {% elif quotation.status == "Rejected" %}
-              <p>Status: Rejected</p>
-          {% else %}
-              <form action="{{ url_for('accept_quotation', quotation_id=quotation.id) }}" method="post">
-                  <input type="hidden" name="quotation_id" value="{{ quotation.id }}">
-                  <button type="submit">Accept</button>
-              </form>
-              <form action="{{ url_for('reject_quotation', quotation_id=quotation.id) }}" method="post">
-                  <input type="hidden" name="quotation_id" value="{{ quotation.id }}">
-                  <button type="submit">Reject</button>
-              </form>
-          {% endif %}
-      </div>
-      {% endfor %}
+    <label for="from_location">From:</label>
+    <input type="text" id="from_location" name="from_location" required>
+
+    <label for="to_location">To:</label>
+    <input type="text" id="to_location" name="to_location" required>
+
+    <button type="submit">Create Ride</button>
+  </form>
+
+  <!-- Display incoming quotations (if any) -->
+  {% for quotation in quotations %}
+  <div>
+    <!-- Quotation details -->
+    <div>
+      tripId:{{quotation.trip_id}}
+      Quotation Amount:{{quotation.quotation_amount}}
+    </div>
+    <form action="{{ url_for('accept_quotation', quotation_id=quotation.id) }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <button type="submit">Accept</button>
+    </form>
+
+    <form action="{{ url_for('reject_quotation', quotation_id=quotation.id) }}" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <button type="submit">Reject</button>
+    </form>
+  </div>
+  {% endfor %}
 
 
-      <a href="{{ url_for('ride_history') }}">View Ride History</a>
 
-      
-      
-    {% if current_user.is_authenticated %}
-    <a href="{{ url_for('passenger_logout') }}">Logout</a>
-    {% endif %}
 
-    <a href=" {{url_for('index')}}">Not a passenger? go to home??</a>
+  <a href="{{ url_for('ride_history') }}">View Ride History</a>
+
+
+
+  {% if current_user.is_authenticated %}
+  <a href="{{ url_for('passenger_logout') }}">Logout</a>
+  {% endif %}
+
+  <a href=" {{url_for('index')}}">Not a passenger? go to home??</a>
 
 </body>
+
 </html>

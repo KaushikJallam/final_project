@@ -1,11 +1,11 @@
-from main import db 
+from flask_sqlalchemy import SQLAlchemy
+from main import app
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
 import bcrypt
 import secrets
 from datetime import datetime, timedelta
 from sqlalchemy.orm import relationship
-
-
+db = SQLAlchemy(app)
 class Quotation(db.Model):
     __tablename__ = "quotations"
 
@@ -19,8 +19,8 @@ class Quotation(db.Model):
     # Define the relationships between models
     driver = relationship("User", foreign_keys=[driver_id],backref="driver_quotations",overlaps="quotations_as_driver")
     passenger = relationship("User", foreign_keys=[passenger_id],backref="passenger_quotations",overlaps="quotations_as_passenger")
-    ride = db.relationship("Ride", backref="quotations_trip",overlaps="quotation_trip")
-    
+    rides = relationship("Ride", back_populates="quotation")    
+
     def __init__(self, driver_id, passenger_id, trip_id, quotation_amount,status):
         self.driver_id = driver_id
         self.passenger_id = passenger_id
@@ -48,16 +48,17 @@ class Trip(db.Model):
         self.from_location = from_location
         self.to_location = to_location
 
-
 class Ride(db.Model):
+    __tablename__ = 'rides'
     id = db.Column(db.Integer, primary_key=True)
     passenger_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     driver_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     from_location = db.Column(db.String(100), nullable=False)
     to_location = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.String(20), nullable=False,default='Pending')
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
     quotation_id = db.Column(db.Integer, db.ForeignKey('quotations.id'))
-    quotation = relationship('Quotation', back_populates='ride')
+    quotation = relationship('Quotation', back_populates='rides',foreign_keys=[quotation_id])
     driver = relationship("User", foreign_keys=[driver_id], backref="rides_as_driver_rel")
     passenger = relationship("User", foreign_keys=[passenger_id], backref="rides_as_passenger_rel")
 
@@ -84,7 +85,6 @@ class Notification(db.Model):
         self.trip_id = trip_id
         self.quotation_id = quotation_id
         self.message = message
-
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
@@ -118,6 +118,9 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
+
+
+
 
 
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation Status</title>
+</head>
+
+<body>
+    {% if status == 'accepted' %}
+    <h1>Quotation Accepted</h1>
+    {% elif status == 'rejected' %}
+    <h1>Quotation Rejected</h1>
+    {% else %}
+    <h1>Unknown Status</h1>
+    {% endif %}
+</body>
+
+</html>

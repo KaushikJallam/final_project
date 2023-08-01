@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Driver Login</title>
 </head>
+
 <body>
     <h1>Driver Login</h1>
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
 
     <form method="POST">
@@ -27,4 +29,5 @@
     <a href=" {{url_for('index')}}">Not a driver? go to home??</a>
     <a href="{{url_for('forgot_password')}}">forgot password?</a>
 </body>
+
 </html>
