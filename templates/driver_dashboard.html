@@ -14,7 +14,6 @@
     <p>From: {{ trip.from_location }}</p>
     <p>To: {{ trip.to_location }}</p>
 
-    <!-- Display the quotation form for this trip -->
     <form method="POST" action="{{ url_for('driver_dashboard') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="trip_id" value="{{ trip.trip_id }}">

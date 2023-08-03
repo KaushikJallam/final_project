@@ -33,7 +33,7 @@ bootstrap = Bootstrap(app)
 
 # Configure Flask-Mail settings
 app.config['MAIL_SERVER'] = 'gsmtp.gmail.com'
-app.config['MAIL_PORT'] = 465  # Replace with your email server's port number
+app.config['MAIL_PORT'] = 465  
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
@@ -122,7 +122,7 @@ def passenger_register():
 def driver_login():
     if current_user.is_authenticated:
         # If the driver is already logged in, redirect them to the driver dashboard
-        return redirect(url_for('driver_dashboard'))  # Replace 'driver_dashboard' with your desired route for the driver dashboard
+        return redirect(url_for('driver_dashboard'))  
     form = DriverSignInForm()
     if request.method == 'POST':
         # Process the driver sign-in form data
@@ -134,7 +134,7 @@ def driver_login():
         if driver and driver.check_password(password):
             login_user(driver)
             flash('Driver login successful!', 'success')
-            return redirect(url_for('driver_dashboard'))  # Replace 'driver_dashboard' with your desired route for the driver dashboard
+            return redirect(url_for('driver_dashboard'))  
         else:
             flash('Invalid email or password', 'danger')
 
@@ -147,7 +147,7 @@ def driver_login():
 def passenger_login():
     if current_user.is_authenticated:
         # If the passenger is already logged in, redirect them to the passenger dashboard
-        return redirect(url_for('passenger_dashboard'))  # Replace 'passenger_dashboard' with your desired route for the passenger dashboard
+        return redirect(url_for('passenger_dashboard')) 
     form = PassengerSignInForm()
     if request.method == 'POST':
         # Process the passenger sign-in form data
@@ -159,7 +159,7 @@ def passenger_login():
         if passenger and passenger.check_password(password):
             login_user(passenger)
             flash('Passenger login successful!', 'success')
-            return redirect(url_for('passenger_dashboard'))  # Replace 'passenger_dashboard' with your desired route for the passenger dashboard
+            return redirect(url_for('passenger_dashboard')) 
         else:
             flash('Invalid email or password', 'danger')
 

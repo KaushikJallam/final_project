@@ -16,7 +16,6 @@ class Quotation(db.Model):
     quotation_amount = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(50), default="Pending")
     
-    # Define the relationships between models
     driver = relationship("User", foreign_keys=[driver_id],backref="driver_quotations",overlaps="quotations_as_driver")
     passenger = relationship("User", foreign_keys=[passenger_id],backref="passenger_quotations",overlaps="quotations_as_passenger")
     rides = relationship("Ride", back_populates="quotation")    
@@ -37,7 +36,6 @@ class Trip(db.Model):
     from_location = db.Column(db.String(100), nullable=False)
     to_location = db.Column(db.String(100), nullable=False)
 
-    # Define the relationships between models
     quotations = relationship("Quotation",backref="trip_quotations",overlaps="quotations_trip")
     driver = relationship("User", foreign_keys=[driver_id], backref="trips_as_driver_rel",overlaps="rides_as_driver")
     passenger = relationship("User", foreign_keys=[passenger_id], backref="trips_as_passenger_rel",overlaps="rides_as_passenger")
@@ -73,7 +71,6 @@ class Notification(db.Model):
     message = db.Column(db.String(200), nullable=False)
     is_read = db.Column(db.Boolean, default=False)
     
-    # Define relationships between models
     driver = relationship("User", foreign_keys=[driver_id])
     passenger = relationship("User", foreign_keys=[passenger_id])
     trip = relationship("Trip")

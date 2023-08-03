@@ -34,8 +34,7 @@ def see_quotations():
             print("status",q.status)
             print("updatd status",q.status)
             print('check rides',q.rides)
-        # quote = Quotation.query.get(24)
-        # print(quote.rides)
+       
 
 
 def check_available_trips():
@@ -47,14 +46,13 @@ def check_available_trips():
 
 
 
-# def show():
-#     show_users()
-#     passenger_rides()
-#     check_available_trips()
+def show():
+    show_users()
+    passenger_rides()
+    check_available_trips()
+    see_quotations()
+
 
 if __name__ == '__main__':
-    # show_users()
-    # show()
-    # check_available_trips()
-    # passenger_rides()
-    see_quotations()
+    show()
+   
